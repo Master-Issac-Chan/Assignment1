@@ -46,27 +46,44 @@ def songsList():
 
 def songsAdder(songs):
     songAdd = open("songs.csv", "a+")
-    songList = {}
+    songs.songElement[0] = str(input("Title: "))
+    while songs.songElement[0] == '':
+        songs.songElement[0] = str(input("Input cannot be blank."))
+    songs.songElement[1] = str(input("Artist: "))
+    while songs.songElement[1] == '':
+        songs.songElement[1] == str(input("Input cannot be blank."))
+    try:
+        songs.songElement[2] = int(input("Year: "))
+        while songs.songElement[2] < 1000:
+            songs.songElement[2] = int(input("Enter a valid year: "))
+    except ValueError:
+        songs.songElement[2] = int(input("Invalid input; enter a valid year: "))
+    print("{} by {} ({}) added to song list".format(songs.songElement[0], songs.songElement[1], songs.songElement[2]))
+
+
 
 def songsComplete(songs):
-    try:
-        songSelect = int(input("Enter the number of a song to mark as learned: "))
-        while songSelect < 0:
-            print("Number must be >= 0")
+    valid_input = False
+    while not valid_input:
+        try:
             songSelect = int(input("Enter the number of a song to mark as learned: "))
+            valid_input = True
+            while songSelect < 0:
+                print("Number must be >= 0")
+                songSelect = int(input("Enter the number of a song to mark as learned: "))
 
-        if songs.songElement[3] == '*':
-            print("{} by {} learned".format(songs.songElement[0],songs.songElement[1]))
-        else:
-            print("You have already learned {}".format(songs.songElement[0]))
-    except ValueError:
-        songSelect = int(input("Invalid input; enter a valid number: "))
+            if songs.songElement[3] == '*':
+                print("{} by {} learned".format(songs.songElement[0],songs.songElement[1]))
+            else:
+                print("You have already learned {}".format(songs.songElement[0]))
+        except ValueError:
+            songSelect = int(input("Invalid input; enter a valid number: "))
 
 
-def main():
+def main(songs):
     userName = str(input("Please enter your name: "))
     print("Songs To Learn 1.0 - by {}".format(userName))
-    print("{} songs loaded".format(songCount))
+    print("{} songs loaded".format(songs.songCount))
     print(menu)
     #testing comment
 
