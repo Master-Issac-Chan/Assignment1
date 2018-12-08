@@ -9,12 +9,10 @@ def menu():
     while menuChoice != 'Q' or 'q':
         if menuChoice == 'L' or 'l':
             songsList()
-            return
         elif menuChoice == 'A' or 'a':
-            songsAdder()
-            return
+            songsAdder(songs)
         elif menuChoice == 'C' or 'c':
-            songsComplete()
+            songsComplete(songs)
             return
         else:
             break
@@ -45,20 +43,29 @@ def songsList():
     return songs
 
 def songsAdder(songs):
-    songAdd = open("songs.csv", "a+")
-    songs.songElement[0] = str(input("Title: "))
-    while songs.songElement[0] == '':
-        songs.songElement[0] = str(input("Input cannot be blank."))
-    songs.songElement[1] = str(input("Artist: "))
-    while songs.songElement[1] == '':
-        songs.songElement[1] == str(input("Input cannot be blank."))
+    songAdd = open("songs.csv", "w")
+    songs = []
+    for song in songAdd:
+        songs.append(song[0])
+    songTitle = str(input("Title: "))
+    while songTitle == '':
+        songTitle = str(input("Input cannot be blank."))
+    songs.append(songTitle)
+    songArtist = str(input("Artist: "))
+    while songArtist == '':
+        songArtist = str(input("Input cannot be blank."))
+    songs.append(songArtist)
     try:
-        songs.songElement[2] = int(input("Year: "))
-        while songs.songElement[2] < 1000:
-            songs.songElement[2] = int(input("Enter a valid year: "))
+        songYear = int(input("Year: "))
     except ValueError:
-        songs.songElement[2] = int(input("Invalid input; enter a valid year: "))
-    print("{} by {} ({}) added to song list".format(songs.songElement[0], songs.songElement[1], songs.songElement[2]))
+        songYear = int(input("Invalid input; enter a valid year: "))
+        while songYear < 1000:
+            songYear = int(input("Enter a valid year: "))
+    songs.append(songYear)
+    songAdd.append(songs)
+
+    print("{} by {} ({}) added to song list".format(songTitle, songArtist, songYear))
+    return songs
 
 
 
@@ -78,7 +85,7 @@ def songsComplete(songs):
                 print("You have already learned {}".format(songs.songElement[0]))
         except ValueError:
             songSelect = int(input("Invalid input; enter a valid number: "))
-
+    return songs
 
 def main(songs):
     userName = str(input("Please enter your name: "))
@@ -87,5 +94,3 @@ def main(songs):
     print(menu)
     #testing comment
 
-if __name__ == '__main__':
-    main()
