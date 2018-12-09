@@ -62,9 +62,8 @@ def songsAdder(songs):
         while songYear < 1000:
             songYear = int(input("Enter a valid year: "))
     songs.append(songYear)
-    songAdd.append(songs)
-
-    print("{} by {} ({}) added to song list".format(songTitle, songArtist, songYear))
+    songs.append('n')
+    print("{} by {} ({}) added to song list".format(songTitle, songArtist, songYear), file=songAdd)
     return songs
 
 
